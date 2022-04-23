@@ -19,6 +19,7 @@
 <body>
 
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    
     <button
       class="navbar-toggler"
       type="button"
@@ -27,6 +28,7 @@
     >
       <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="collapse navbar-collapse" id="navbar">
       <div class="navbar-nav">
         <a class="nav-item nav-link" id="home" href="/">Home</a>
@@ -35,11 +37,15 @@
         <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
       </div>
     </div>
+  
   </nav>
 
+<div class="container">
+  {%block content%} {%endblock%}
+</div>
 
 
-    <script
+  <script
     src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
     integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
     crossorigin="anonymous"
@@ -55,7 +61,7 @@
     crossorigin="anonymous"
   ></script>
 
-    <script
+  <script
     type="text/javascript"
     src="{{ url_for('static', filename='index.js') }}"
   ></script>
