@@ -1,16 +1,22 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request
 
 
 auth = Blueprint('auth', __name__)
 
-@auth.route('/login')
+#Post = when we change some data in database
+#Get = when we want to relode a webbrowser or redirect
+
+@auth.route('/login', methods=['GET', 'POST']) #Adding an array of request this url can handle 
 def login():
-    return render_template("login.html", text="Testing")
+    data = request.form
+    print(data)
+    return render_template("login.html")
 
 @auth.route('/logout')
 def logout(): 
     return "<p>Logout here</p>"
 
-@auth.route('/signup')
+@auth.route('/signup', methods=['GET', 'POST']) #Adding an array of request this url can handle 
 def sign_up():
+    
     return render_template("sign_up.html")
