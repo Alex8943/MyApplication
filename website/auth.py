@@ -3,7 +3,7 @@ from .models import User
 from sqlalchemy import true
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
-
+from flask_login import login_user, login_required, logout_user, current_user
 auth = Blueprint('auth', __name__)
 
 #Post = when we change some data in database
@@ -19,6 +19,8 @@ def login():
         if user: 
             if check_password_hash(user.password, password): #Checking if the users password is stored in the database
                 flash('Logged in successfuly', category='success')
+                login_user(user, remember=True)
+                return redirect(url_for('views.home'))
             else: 
                 flash('Incorrect password ', category='error')
         else: 
@@ -28,8 +30,10 @@ def login():
     return render_template("login.html")
 
 @auth.route('/logout')
+@login_required
 def logout(): 
-    return "<p>Logout here</p>"
+    logout_user()
+    return redirect(url_for('auth.login'))
 
 @auth.route('/signup', methods=['GET', 'POST']) #Adding an array of request this url can handle 
 def sign_up():
@@ -58,6 +62,7 @@ def sign_up():
                 password1, method='sha256'))
             db.session.add(new_user)
             db.session.commit()
+            login_user(user, remember=True)
             flash('Account created! ', category='success')
             return redirect(url_for('views.home'))
     return render_template("sign_up.html")
